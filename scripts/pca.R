@@ -24,4 +24,80 @@ eval(
   )
 )
 
+# analiza głównych składowych
 pca <- prcomp(dtm_tfidf_2_16)
+
+# przygotowanie danych do wykresu
+legend <- paste(
+  paste(
+    "d",
+    1:length(rownames(dtm_tfidf_2_16)),
+    sep = ""
+  ),
+  rownames(dtm_tfidf_2_16),
+  sep = " - "
+)
+x <- pca$x[,1]
+y <- pca$x[,2]
+
+# wykres w przestrzeni dwuwymiarowej
+options(scipen = 5)
+plot(
+  x,
+  y,
+  main = "Analiza głównych składowych",
+  xlab = "PC1",
+  ylab = "PC2",
+  col = "purple"
+)
+text(
+  x,
+  y, 
+  paste(
+    "d",
+    1:length(rownames(dtm_tfidf_2_16)),
+    sep = ""
+  ),
+  pos = 4,
+  col = "purple"
+)
+legend(
+  "bottom",
+  legend,
+  cex = 0.5,
+  text.col = "purple"
+)
+
+# zapis wykresu do pliku .png
+pca_file <- create_path(
+  output_dir,
+  "pca.png"
+)
+png(pca_file)
+options(scipen = 5)
+plot(
+  x,
+  y,
+  main = "Analiza głównych składowych",
+  xlab = "PC1",
+  ylab = "PC2",
+  col = "purple"
+)
+text(
+  x,
+  y, 
+  paste(
+    "d",
+    1:length(rownames(dtm_tfidf_2_16)),
+    sep = ""
+  ),
+  pos = 4,
+  col = "purple"
+)
+legend(
+  "bottom",
+  legend,
+  cex = 0.7,
+  text.col = "purple"
+)
+dev.off()
